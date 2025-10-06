@@ -1,6 +1,7 @@
 // ignore_for_file: unreachable_switch_case
 
 import 'package:demo_noti/api/navigation.dart';
+import 'package:demo_noti/screens/profile-screen/profile-screen.dart';
 import 'package:demo_noti/widgets/app_shell.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -63,7 +64,7 @@ GoRouter buildGoRouter({
             routes: [
               GoRoute(
                 path: '/profile',
-                builder: (_, __) => const _Stub('Profile'),
+                builder: (_, __) => const ProfileScreen(),
               ),
             ],
           ),
