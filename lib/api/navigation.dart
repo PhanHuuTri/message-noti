@@ -4,12 +4,48 @@ import 'package:go_router/go_router.dart';
 sealed class RouteSpec {
   const RouteSpec();
 }
+sealed class AppRouteSpec extends RouteSpec {
+  const AppRouteSpec();
+}
 
-class HomeRoute extends RouteSpec { const HomeRoute(); }
-class SearchRoute extends RouteSpec { const SearchRoute(); }
-class CartRoute extends RouteSpec { const CartRoute(); }
-class ProfileRoute extends RouteSpec { const ProfileRoute(); }
+// Group screen auth & common
+class SplashRoute extends AppRouteSpec { const SplashRoute(); }
+class LoginRoute extends AppRouteSpec { const LoginRoute(); }
+class ForgotPasswordRoute extends AppRouteSpec { const ForgotPasswordRoute(); }
 
+// Main application routes
+class HomeRoute extends AppRouteSpec { const HomeRoute(); }
+class TransactionsRoute extends AppRouteSpec { const TransactionsRoute(); }
+class ProductsRoute extends AppRouteSpec { const ProductsRoute(); }
+class NotificationsRoute extends AppRouteSpec { const NotificationsRoute(); }
+class ProfileRoute extends AppRouteSpec { const ProfileRoute(); }
+
+class TransactionDetailsRoute extends AppRouteSpec {
+  final String transactionId;
+  const TransactionDetailsRoute(this.transactionId);
+}
+
+/// Route for creating a new transaction.
+class CreateTransactionRoute extends AppRouteSpec {
+  const CreateTransactionRoute();
+}
+
+/// Route to view the details of a product in the catalog.
+class ProductDetailsRoute extends AppRouteSpec {
+  final String productId;
+  const ProductDetailsRoute(this.productId);
+}
+
+/// Route to the chat list screen.
+class ChatListRoute extends AppRouteSpec {
+  const ChatListRoute();
+}
+
+/// Route to a specific chat conversation.
+class ChatDetailsRoute extends AppRouteSpec {
+  final String conversationId;
+  const ChatDetailsRoute(this.conversationId);
+}
 // Navigation result (if the screen returns)
 typedef NavResult<T> = Future<T?>;
 
