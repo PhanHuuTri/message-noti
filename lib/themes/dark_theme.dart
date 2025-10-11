@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final ThemeData darkTheme = ThemeData(
+  fontFamily: 'NotoSans',
   brightness: Brightness.dark,
   primaryColor: Colors.deepPurple,
   scaffoldBackgroundColor: Colors.black,
@@ -9,14 +10,14 @@ final ThemeData darkTheme = ThemeData(
     foregroundColor: Colors.white,
   ),
   textTheme: const TextTheme(
-    bodyLarge: TextStyle(color: Colors.white, fontSize: 18),
-    bodySmall: TextStyle(color: Colors.white54, fontSize: 14),
-    bodyMedium: TextStyle(color: Colors.white, fontSize: 16),
+    bodyLarge: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w300),
+    bodySmall: TextStyle(color: Colors.white54, fontSize: 14, fontWeight: FontWeight.w300),
+    bodyMedium: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w300),
     titleMedium: TextStyle(
       color: Colors.white,
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
-    labelMedium: TextStyle(color: Colors.white, fontSize: 14),
+    labelMedium: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w300),
   ),
 );

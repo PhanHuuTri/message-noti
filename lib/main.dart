@@ -1,5 +1,6 @@
 import 'package:demo_noti/firebase_options.dart';
 import 'package:demo_noti/routers/go_router_adapter.dart';
+import 'package:demo_noti/services/auth_service.dart';
 import 'package:demo_noti/services/notification_service.dart';
 import 'package:demo_noti/themes/dark_theme.dart';
 import 'package:demo_noti/themes/light_theme.dart';
@@ -23,7 +24,9 @@ void main() async {
   final extra = <RouteBase>[
     // Ví dụ: SettingsFeature.routes(), ProductFeature.routes(), ...
   ];
+  final authService = MockAuthService(); // Thay bằng AuthService thật
   final router = buildGoRouter(
+    authService: authService, // Sử dụng instance đã tạo
     extraRoutes: extra,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -41,7 +44,12 @@ void main() async {
 
   final nav = GoNav(router); // Adapter implement Navigation
 
-  runApp(MyApp(router: router, nav: nav));
+  runApp(
+    ChangeNotifierProvider<AuthService>(
+      create: (_) => authService,
+      child: MyApp(router: router, nav: nav),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -60,9 +68,11 @@ class MyApp extends StatelessWidget {
           return MaterialApp.router(
             routerConfig: router,
             debugShowCheckedModeBanner: false,
+            
             themeMode: themeManager.isDarkMode
                 ? ThemeMode.dark
                 : ThemeMode.light,
+            
             theme: lightTheme,
             darkTheme: darkTheme,
           );
@@ -151,5 +161,20 @@ class MyApp extends StatelessWidget {
 //         child: const Icon(Icons.add),
 //       ), // This trailing comma makes auto-formatting nicer for build methods.
 //     );
+//   }
+// }
+//   class AuthService extends ChangeNotifier {
+//   bool _isLoggedIn = false;
+
+//   bool get isLoggedIn => _isLoggedIn;
+
+//   Future<void> login() async {
+//     _isLoggedIn = true;
+//     notifyListeners();
+//   }
+
+//   Future<void> logout() async {
+//     _isLoggedIn = false;
+//     notifyListeners();
 //   }
 // }
