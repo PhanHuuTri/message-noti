@@ -20,117 +20,154 @@ class _LoginScreenState extends State<LoginScreen> {
     // final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          ClipPath(
-            clipper: WavyHeaderClipper(),
-            child: Container(
-              height: 660,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary.withValues(alpha: .8),
-                    Theme.of(
-                      context,
-                    ).colorScheme.secondary.withValues(alpha: 0),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Stack(
+          children: [
+            ClipPath(
+              clipper: WavyHeaderClipper(),
+              child: Container(
+                height: 660,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.primary.withValues(alpha: .8),
+                      Theme.of(
+                        context,
+                      ).colorScheme.secondary.withValues(alpha: 0),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                 ),
               ),
             ),
-          ),
-          // Expanded(child: child),
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 40),
-                  // TODO: Thay bằng logo Namilux thật
-                  Image.asset(
-                    'assets/images/logo-app.png',
-                    height: 170,
-                    width: 170,
-                  ),
-                  const SizedBox(height: 40),
-                  Text(
-                    'Chào mừng trở lại',
-                    style: textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+            // Expanded(child: child),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 40),
+                    Image.asset(
+                      'assets/images/logo-app.png',
+                      height: 170,
+                      width: 170,
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Đăng nhập để tiếp tục',
-                    style: textTheme.titleMedium?.copyWith(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 32),
-                  const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Tên đăng nhập hoặc SĐT',
-                      prefixIcon: Icon(Icons.person_outline),
-                      border: OutlineInputBorder(),
-                    ),
-                    keyboardType: TextInputType.text,
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    obscureText: !_isPasswordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Mật khẩu',
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      border: const OutlineInputBorder(),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'LOGIN',
+                        style: textTheme.headlineLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 60,
+                          letterSpacing: 1.75,
                         ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    SizedBox(
+                      width: 2 / 3 * MediaQuery.of(context).size.width,
+                      child: Text(
+                        'Already have an Account?',
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.primary.withValues(alpha: .8),
+                        ),
+                      ),
+                    ),
+                
+                    const SizedBox(height: 32),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Tên đăng nhập hoặc email',
+                        prefixIcon: Icon(Icons.person_outline),
+                        fillColor: Theme.of(context).colorScheme.primary,
+                        prefixIconColor: Theme.of(context).colorScheme.primary,
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontStyle: FontStyle.italic,
+                          fontSize: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge?.fontSize,
+                        ),
+                      ),
+                      keyboardType: TextInputType.text,
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      obscureText: !_isPasswordVisible,
+                      decoration: InputDecoration(
+                        labelText: 'Mật khẩu',
+                        alignLabelWithHint: true,
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        fillColor: Theme.of(context).colorScheme.primary,
+                        prefixIconColor: Theme.of(context).colorScheme.primary,
+                        labelStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontStyle: FontStyle.italic,
+                          fontSize: Theme.of(
+                            context,
+                          ).textTheme.bodyLarge?.fontSize,
+                        ),
+                        // border: OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
                         onPressed: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
+                          // Sử dụng GoRouter để điều hướng
+                          GoRouter.of(context).push('/forgot-password');
                         },
+                        child: const Text('Quên mật khẩu?'),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                       onPressed: () {
-                        // Sử dụng GoRouter để điều hướng
-                        GoRouter.of(context).push('/forgot-password');
+                        // TODO: Xử lý logic đăng nhập
+                        Provider.of<AuthService>(context, listen: false).login();
                       },
-                      child: const Text('Quên mật khẩu?'),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                      child: Text(
+                        'Submit',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(color: Colors.white),
                       ),
                     ),
-                    onPressed: () {
-                      // TODO: Xử lý logic đăng nhập
-                      Provider.of<AuthService>(context, listen: false).login();
-                    },
-                    child: Text(
-                      'Login',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Colors.white),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
