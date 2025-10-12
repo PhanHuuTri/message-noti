@@ -25,24 +25,28 @@ final class AppShell extends StatelessWidget {
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.search,
+              Icons.swap_horiz,
               color: Theme.of(context).colorScheme.primary,
             ),
-            label: 'Search',
+            label: 'Transactions',
           ),
           NavigationDestination(
-            icon: Badge(
-              label: Text('12'),
-              child: Icon(Icons.shopping_bag_outlined, color: Theme.of(context).colorScheme.primary),
+            icon: Icon(
+              Icons.inventory_2,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            selectedIcon: Badge(
-              label: Text('12'),
-              child: Icon(
-                Icons.shopping_bag,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+            label: 'Products',
+          ),
+          NavigationDestination(
+            icon: Icon(
+              Icons.notifications_outlined,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            label: 'Cart',
+            selectedIcon: Icon(
+              Icons.notifications,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            label: 'Notifications',
           ),
           NavigationDestination(
             icon: Icon(
