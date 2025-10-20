@@ -31,25 +31,22 @@ void main() async {
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
-    // redirect: (BuildContext context, GoRouterState state) {
-    //   // Ví dụ guard login cực gọn
-    //   // final loggedIn = true; // Lấy từ DI/state thực tế
-    //   final wantsProfile = state.matchedLocation.startsWith('/profile');
-    //   if (wantsProfile) {
-    //     return '/home';
-    //   }
-    //   return null;
-    // },
+    redirect: (BuildContext context, GoRouterState state) {
+      // Ví dụ guard login cực gọn
+      // final loggedIn = true; // Lấy từ DI/state thực tế
+      final wantsProfile = state.matchedLocation.startsWith('/profile');
+      if (wantsProfile) {
+        return '/home';
+      }
+      return null;
+    },
   );
 
   final nav = GoNav(router); // Adapter implement Navigation
 
   runApp(
     ChangeNotifierProvider<AuthService>(
-      create: (_) => authService,
-      child: MyApp(router: router, nav: nav),
-    ),
-  );
+        create: (_) => authService, child: MyApp(router: router, nav: nav)));
 }
 
 class MyApp extends StatelessWidget {
@@ -62,23 +59,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => ThemeManager(),
-      child: Consumer<ThemeManager>(
-        builder: (context, themeManager, child) {
+        create: (_) => ThemeManager(),
+        child: Consumer<ThemeManager>(builder: (context, themeManager, child) {
           return MaterialApp.router(
-            routerConfig: router,
-            debugShowCheckedModeBanner: false,
-            
-            themeMode: themeManager.isDarkMode
-                ? ThemeMode.dark
-                : ThemeMode.light,
-            
-            theme: lightTheme,
-            darkTheme: darkTheme,
-          );
-        },
-      ),
-    );
+              routerConfig: router,
+              debugShowCheckedModeBanner: false,
+              themeMode:
+                  themeManager.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+              theme: lightTheme,
+              darkTheme: darkTheme);
+        }));
   }
 }
 

@@ -20,6 +20,11 @@ class ProductsRoute extends AppRouteSpec { const ProductsRoute(); }
 class NotificationsRoute extends AppRouteSpec { const NotificationsRoute(); }
 class ProfileRoute extends AppRouteSpec { const ProfileRoute(); }
 
+
+/// Route for the settings screen under profile.
+class SettingsRoute extends AppRouteSpec {
+  const SettingsRoute();
+}
 class TransactionDetailsRoute extends AppRouteSpec {
   final String transactionId;
   const TransactionDetailsRoute(this.transactionId);

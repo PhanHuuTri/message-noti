@@ -13,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
+  String _username = '';
+  String _password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context).colorScheme.primary.withValues(alpha: .8),
+                      Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: .8),
                       Theme.of(
                         context,
                       ).colorScheme.secondary.withValues(alpha: 0),
@@ -81,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                
+
                     const SizedBox(height: 32),
                     TextField(
                       decoration: InputDecoration(
@@ -98,6 +102,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       keyboardType: TextInputType.text,
+                      onChanged: (value) {
+                        setState(() {
+                          _username = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 16),
                     TextField(
@@ -115,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             context,
                           ).textTheme.bodyLarge?.fontSize,
                         ),
+
                         // border: OutlineInputBorder(),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -129,6 +139,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          _password = value;
+                        });
+                      },
                     ),
                     const SizedBox(height: 8),
                     Align(
@@ -145,15 +160,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                        foregroundColor: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       onPressed: () {
-                        // TODO: Xử lý logic đăng nhập
-                        Provider.of<AuthService>(context, listen: false).login();
+                        Provider.of<AuthService>(
+                          context,
+                          listen: false,
+                        ).login(_username, _password);
                       },
                       child: Text(
                         'Submit',
