@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 
 final ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
   fontFamily: 'NotoSans',
+  primaryColor: Colors.deepPurple[400],
   brightness: Brightness.light,
-  primaryColor: Colors.blue,
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Colors.deepPurple[400]!,
+    brightness: Brightness.light,
+  ),
   scaffoldBackgroundColor: Colors.white,
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.blue,
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.deepPurple[400],
     foregroundColor: Colors.white,
+    shadowColor: Colors.black,
   ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.black, fontSize: 18),
