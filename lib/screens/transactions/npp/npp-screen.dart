@@ -141,7 +141,7 @@ Widget _buildTransactionCard(
   return Container(
     padding: const EdgeInsets.all(8.0),
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surface,
+      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
       boxShadow: [
         BoxShadow(
           color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.2),

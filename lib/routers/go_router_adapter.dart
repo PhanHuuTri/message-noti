@@ -8,7 +8,7 @@ import 'package:demo_noti/screens/notications/notications-main.dart';
 import 'package:demo_noti/screens/product/product-main.dart';
 import 'package:demo_noti/screens/profile-screen/sub-screen/setting-screen.dart';
 import 'package:demo_noti/screens/transactions/transactions-main.dart';
-import 'package:demo_noti/services/auth_service.dart';
+import 'package:demo_noti/data/services/auth_service.dart';
 import 'package:demo_noti/screens/profile-screen/profile-screen.dart';
 import 'package:demo_noti/screens/splash-screen/splash-screen.dart';
 import 'package:demo_noti/utils/fade-slide-route.dart';
@@ -60,8 +60,8 @@ String? _appRedirect(
   // Các trang không cần đăng nhập
   final isPublicPage = location == '/login' || location == '/forgot-password';
 
-  // Nếu đang ở màn hình Splash, cho phép hiển thị
-  if (location == '/') {
+  // If on Splash screen, allow display
+  if (location == '/splash') {
     return null;
   }
 
@@ -75,7 +75,7 @@ String? _appRedirect(
     return '/home';
   }
 
-  // Các trường hợp còn lại, cho phép điều hướng
+  // In all other cases, allow navigation
   return null;
 }
 
@@ -90,7 +90,9 @@ GoRouter buildGoRouter({
     initialLocation: initialLocation,
     observers: observers,
     refreshListenable: authService,
-    // Logic redirect được áp dụng cho mọi điều hướng
+    // Redirect logic is applied to all navigations
+    // Example: If a user is not logged in and tries to access /npp-home, they will be redirected to /login.
+    // If a user is logged in and is on the /login page, they will be redirected to the home page corresponding to their role.
     redirect: (context, state) => _appRedirect(context, state, authService),
     routes: [
       // Routes that are not in the Shell (e.g., Splash, Login)
@@ -133,8 +135,11 @@ GoRouter buildGoRouter({
                     buildPageWithFadeSlideTransition(
                       context: context,
                       state: state,
-                      child: HomeMainScreen(currentUserRole: authService.currentUser?.role ?? UserRole.c2),
-                    )
+                      child: HomeMainScreen(
+                        currentUserRole:
+                            authService.currentUser?.role ?? UserRole.c2,
+                      ),
+                    ),
 
                 // builder: (_, __) => const PlaceholderScreen('Home'),
               ),
@@ -149,7 +154,10 @@ GoRouter buildGoRouter({
                     buildPageWithFadeSlideTransition(
                       context: context,
                       state: state,
-                      child: TransactionsMainScreen(currentUserRole: authService.currentUser?.role ?? UserRole.c2),
+                      child: TransactionsMainScreen(
+                        currentUserRole:
+                            authService.currentUser?.role ?? UserRole.c2,
+                      ),
                     ),
                 // builder: (_, __) => const PlaceholderScreen('Transactions'),
               ),
@@ -164,7 +172,10 @@ GoRouter buildGoRouter({
                     buildPageWithFadeSlideTransition(
                       context: context,
                       state: state,
-                      child: ProductMainScreen(currentUserRole: authService.currentUser?.role ?? UserRole.c2),
+                      child: ProductMainScreen(
+                        currentUserRole:
+                            authService.currentUser?.role ?? UserRole.c2,
+                      ),
                     ),
                 // builder: (_, s) => const PlaceholderScreen('Products'),
               ),
@@ -179,7 +190,10 @@ GoRouter buildGoRouter({
                     buildPageWithFadeSlideTransition(
                       context: context,
                       state: state,
-                      child: NotificationsMainScreen(currentUserRole: authService.currentUser?.role ?? UserRole.c2),
+                      child: NotificationsMainScreen(
+                        currentUserRole:
+                            authService.currentUser?.role ?? UserRole.c2,
+                      ),
                     ),
               ),
             ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Màn hình chung dùng cho tất cả nhóm (Đăng nhập, Trang chủ)
+// Common screen for all groups (Login, Home)
 class CommomScreen extends StatelessWidget {
   const CommomScreen({super.key});
 
