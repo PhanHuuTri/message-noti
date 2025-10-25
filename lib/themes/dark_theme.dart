@@ -17,7 +17,7 @@ final ThemeData darkTheme = ThemeData(
   ),
   colorScheme: ColorScheme.dark(
     primary: Colors.deepPurple,
-    primaryContainer: const Color.fromARGB(255, 38, 5, 95)!,
+    primaryContainer: const Color.fromARGB(255, 38, 5, 95),
   ),
   cardColor: Color(0xFF1E1E1E),
   textTheme: const TextTheme(
