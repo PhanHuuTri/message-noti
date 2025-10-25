@@ -1,10 +1,16 @@
+// ignore_for_file: dead_code
+
 import 'package:flutter/material.dart';
+
+import 'package:demo_noti/utils/context_extensions.dart';
 
 class TransactionsThuCapScreen extends StatelessWidget {
   const TransactionsThuCapScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final statusColors = context.statusColors;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -51,7 +57,8 @@ class TransactionsThuCapScreen extends StatelessWidget {
                       'Ngày 20/10/2023',
                       'Bếp gas NA-123 (x5), Van ngắt (x10)',
                       'Đã xác nhận',
-                      Colors.green,
+                      true ? statusColors.success : statusColors.warning,
+                      true ? statusColors.onSuccess : statusColors.onWarning,
                     ),
                     _buildTransactionCard(
                       context,
@@ -59,7 +66,8 @@ class TransactionsThuCapScreen extends StatelessWidget {
                       'Ngày 21/10/2023',
                       'Bếp gas NA-123 (x2), Van ngắt (x4)',
                       'Chờ xử lý',
-                      Colors.orange,
+                      false ? statusColors.success : statusColors.warning,
+                      false ? statusColors.onSuccess : statusColors.onWarning,
                     ),
                     _buildTransactionCard(
                       context,
@@ -67,7 +75,8 @@ class TransactionsThuCapScreen extends StatelessWidget {
                       'Ngày 22/10/2023',
                       'Bếp gas NA-123 (x1)',
                       'Đã xác nhận',
-                      Colors.green,
+                      true ? statusColors.success : statusColors.warning,
+                      true ? statusColors.onSuccess : statusColors.onWarning,
                     ),
                     _buildTransactionCard(
                       context,
@@ -75,7 +84,8 @@ class TransactionsThuCapScreen extends StatelessWidget {
                       'Ngày 23/10/2023',
                       'Van ngắt (x3)',
                       'Chờ xử lý',
-                      Colors.orange,
+                      false ? statusColors.success : statusColors.warning,
+                      false ? statusColors.onSuccess : statusColors.onWarning,
                     ),
                     _buildTransactionCard(
                       context,
@@ -83,7 +93,8 @@ class TransactionsThuCapScreen extends StatelessWidget {
                       'Ngày 24/10/2023',
                       'Bếp gas NA-123 (x5)',
                       'Đã xác nhận',
-                      Colors.green,
+                      true ? statusColors.success : statusColors.warning,
+                      true ? statusColors.onSuccess : statusColors.onWarning,
                     ),
                     _buildTransactionCard(
                       context,
@@ -91,7 +102,8 @@ class TransactionsThuCapScreen extends StatelessWidget {
                       'Ngày 25/10/2023',
                       'Bếp gas NA-123 (x2), Van ngắt (x1)',
                       'Chờ xử lý',
-                      Colors.orange,
+                      false ? statusColors.success : statusColors.warning,
+                      false ? statusColors.onSuccess : statusColors.onWarning,
                     ),
                     _buildTransactionCard(
                       context,
@@ -99,7 +111,8 @@ class TransactionsThuCapScreen extends StatelessWidget {
                       'Ngày 26/10/2023',
                       'Van ngắt (x6)',
                       'Đã xác nhận',
-                      Colors.green,
+                      true ? statusColors.success : statusColors.warning,
+                      true ? statusColors.onSuccess : statusColors.onWarning,
                     ),
                   ],
                 ),
@@ -136,12 +149,20 @@ Widget _buildTransactionCard(
   String date,
   String items,
   String status,
-  Color statusColor,
+  Color statusBgColor,
+  Color statusTextColor,
 ) {
   return Container(
     padding: const EdgeInsets.all(8.0),
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.surface,
+      // color: Theme.of(context).colorScheme.primaryContainer,
+      gradient: Gradient.lerp(
+        const LinearGradient(colors: [Colors.white, Colors.white]),
+        LinearGradient(colors: [
+          Theme.of(context).colorScheme.primaryContainer,
+          Theme.of(context).colorScheme.primaryContainer
+        ]), 1.0,
+      ),
       boxShadow: [
         BoxShadow(
           color: Theme.of(context).colorScheme.shadow.withValues(alpha: 0.2),
@@ -168,7 +189,7 @@ Widget _buildTransactionCard(
             ),
             Container(
               decoration: BoxDecoration(
-                color: statusColor.withValues(alpha: 0.8),
+                color: statusBgColor,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Padding(
@@ -176,7 +197,7 @@ Widget _buildTransactionCard(
                 child: Text(
                   status,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: statusTextColor,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

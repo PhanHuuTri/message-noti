@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.demo_noti"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = "27.0.12077973"
 
     compileOptions {
@@ -29,7 +29,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdkVersion(26)
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -47,7 +47,6 @@ flutter {
     source = "../.."
 }
 dependencies {
-    // THÊM DÒNG NÀY để kích hoạt desugaring JDK
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     // các dependency khác nếu có...
 }

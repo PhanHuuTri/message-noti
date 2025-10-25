@@ -1,7 +1,7 @@
 // Example AuthService
 // You should implement your actual authentication logic here,
 // perhaps using a Stream to notify of auth state changes.
-import 'package:demo_noti/data/users-data.dart';
+import 'package:demo_noti/data/models/user_model.dart';
 import 'package:demo_noti/utils/permission_utils.dart';
 import 'package:flutter/widgets.dart';
 
@@ -33,7 +33,7 @@ class MockAuthService extends ChangeNotifier implements AuthService {
     ),
     const User(
       id: 'tc01',
-      name: 'Đại lý cấp 2 Minh Anh',
+      name: 'Level 2 Agent Minh Anh',
       email: 'thucap@example.com',
       username: 'thucap',
       password: '123',
@@ -71,17 +71,17 @@ class MockAuthService extends ChangeNotifier implements AuthService {
     ); // Giả lập độ trễ mạng
 
     _currentUser = user;
-    notifyListeners(); // Thông báo cho các widget đang lắng nghe về sự thay đổi trạng thái
+    notifyListeners(); // Notify listening widgets of state change
     return true;
   }
 
-  /// Hàm giả lập đăng xuất.
+  /// Mock logout function.
   @override
   Future<void> logout() async {
     await Future.delayed(
       const Duration(milliseconds: 200),
-    ); // Giả lập độ trễ mạng
+    ); // Simulate network latency
     _currentUser = null;
-    notifyListeners(); // Thông báo thay đổi trạng thái
+    notifyListeners(); // Notify state change
   }
 }

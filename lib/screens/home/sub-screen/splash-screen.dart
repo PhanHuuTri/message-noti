@@ -6,7 +6,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Đảm bảo màn hình mở rộng toàn bộ màn hình
+    // Ensure the screen expands to full screen
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
     return Scaffold(

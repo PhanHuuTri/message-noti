@@ -1,7 +1,7 @@
 import 'package:demo_noti/firebase_options.dart';
 import 'package:demo_noti/routers/go_router_adapter.dart';
-import 'package:demo_noti/services/auth_service.dart';
-import 'package:demo_noti/services/notification_service.dart';
+import 'package:demo_noti/data/services/auth_service.dart';
+import 'package:demo_noti/data/services/notification_service.dart';
 import 'package:demo_noti/themes/dark_theme.dart';
 import 'package:demo_noti/themes/light_theme.dart';
 import 'package:demo_noti/themes/theme_manager.dart';
@@ -26,7 +26,7 @@ void main() async {
   ];
   final authService = MockAuthService(); // Thay bằng AuthService thật
   final router = buildGoRouter(
-    authService: authService, // Sử dụng instance đã tạo
+    authService: authService, // Use the created instance
     extraRoutes: extra,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),

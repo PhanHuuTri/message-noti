@@ -1,5 +1,5 @@
 import 'package:demo_noti/screens/authen/wavy-header-clipper.dart';
-import 'package:demo_noti/services/auth_service.dart';
+import 'package:demo_noti/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {
-                          // Sử dụng GoRouter để điều hướng
+                          // Use GoRouter to navigate
                           GoRouter.of(context).push('/forgot-password');
                         },
                         child: const Text('Quên mật khẩu?'),

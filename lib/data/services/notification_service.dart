@@ -79,7 +79,6 @@ void _onForegroundMessage(RemoteMessage message) async {
   );
 }
 
-// (Android/iOS) background handler – không nên show local noti ở đây
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
