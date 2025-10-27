@@ -1,18 +1,25 @@
+import 'package:demo_noti/data/services/storage_service.dart';
+import 'package:demo_noti/data/services/theme_service.dart';
 import 'package:demo_noti/firebase_options.dart';
 import 'package:demo_noti/routers/go_router_adapter.dart';
 import 'package:demo_noti/data/services/auth_service.dart';
 import 'package:demo_noti/data/services/notification_service.dart';
 import 'package:demo_noti/themes/dark_theme.dart';
 import 'package:demo_noti/themes/light_theme.dart';
-import 'package:demo_noti/themes/theme_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await GetStorage.init();
+  await initServices();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions
         .currentPlatform, // nếu có file firebase_options.dart
@@ -46,7 +53,18 @@ void main() async {
 
   runApp(
     ChangeNotifierProvider<AuthService>(
-        create: (_) => authService, child: MyApp(router: router, nav: nav)));
+      create: (_) => authService,
+      child: MyApp(router: router, nav: nav),
+    ),
+  );
+}
+
+Future<void> initServices() async {
+  // Put ThemeService so it exists
+  Get.put(ThemeService());
+
+  // Put StorageService and wait for it to finish initializing
+  await Get.putAsync<StorageService>(() => StorageService().init());
 }
 
 class MyApp extends StatelessWidget {
@@ -58,17 +76,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (_) => ThemeManager(),
-        child: Consumer<ThemeManager>(builder: (context, themeManager, child) {
-          return MaterialApp.router(
-              routerConfig: router,
-              debugShowCheckedModeBanner: false,
-              themeMode:
-                  themeManager.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-              theme: lightTheme,
-              darkTheme: darkTheme);
-        }));
+    final ThemeService themeService = Get.find<ThemeService>();
+
+    return Obx(() {
+      return MaterialApp.router(
+        routerConfig: router,
+        debugShowCheckedModeBanner: false,
+        themeMode: themeService.theme.value,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+      );
+    });
   }
 }
 
@@ -151,20 +169,5 @@ class MyApp extends StatelessWidget {
 //         child: const Icon(Icons.add),
 //       ), // This trailing comma makes auto-formatting nicer for build methods.
 //     );
-//   }
-// }
-//   class AuthService extends ChangeNotifier {
-//   bool _isLoggedIn = false;
-
-//   bool get isLoggedIn => _isLoggedIn;
-
-//   Future<void> login() async {
-//     _isLoggedIn = true;
-//     notifyListeners();
-//   }
-
-//   Future<void> logout() async {
-//     _isLoggedIn = false;
-//     notifyListeners();
 //   }
 // }
