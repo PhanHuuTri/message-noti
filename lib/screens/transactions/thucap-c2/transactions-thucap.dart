@@ -160,8 +160,11 @@ Widget _buildTransactionCard(
         const LinearGradient(colors: [Colors.white, Colors.white]),
         LinearGradient(colors: [
           Theme.of(context).colorScheme.primaryContainer,
-          Theme.of(context).colorScheme.primaryContainer
-        ]), 1.0,
+          Colors.white,
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        ), 1.5,
       ),
       boxShadow: [
         BoxShadow(

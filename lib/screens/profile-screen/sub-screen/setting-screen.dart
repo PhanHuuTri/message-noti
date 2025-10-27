@@ -1,13 +1,14 @@
-import 'package:demo_noti/themes/theme_manager.dart';
+import 'package:demo_noti/data/services/theme_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ThemeService themeService = Get.find<ThemeService>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Setting'),
@@ -26,13 +27,18 @@ class SettingScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).appBarTheme.shadowColor!.withValues(alpha: 0.2),
+                    color: Theme.of(
+                      context,
+                    ).appBarTheme.shadowColor!.withValues(alpha: 0.2),
                     blurRadius: 4,
                     offset: Offset(0, 2),
                   ),
                 ],
               ),
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 20.0,
+              ),
               child: Column(
                 children: [
                   Container(
@@ -48,7 +54,7 @@ class SettingScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        Provider.of<ThemeManager>(context).isDarkMode
+                        themeService.theme.value == ThemeMode.light
                             ? 'Light Mode'
                             : 'Dark Mode',
                         style: Theme.of(context).textTheme.bodyLarge,
@@ -57,10 +63,11 @@ class SettingScreen extends StatelessWidget {
                         value: Theme.of(context).brightness == Brightness.dark,
                         onChanged: (value) {
                           // Handle theme change
-                          Provider.of<ThemeManager>(
-                            context,
-                            listen: false,
-                          ).toggleTheme();
+                          // Provider.of<ThemeManager>(
+                          //   context,
+                          //   listen: false,
+                          // ).toggleTheme();
+                          themeService.switchTheme();
                         },
                       ),
                     ],
@@ -75,13 +82,18 @@ class SettingScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).appBarTheme.shadowColor!.withValues(alpha: 0.2),
+                    color: Theme.of(
+                      context,
+                    ).appBarTheme.shadowColor!.withValues(alpha: 0.2),
                     blurRadius: 4,
                     offset: Offset(0, 2),
                   ),
                 ],
               ),
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 20.0,
+              ),
               child: Column(
                 children: [
                   Container(
@@ -95,7 +107,9 @@ class SettingScreen extends StatelessWidget {
                   ),
                   ListTile(
                     // leading: Icon(Icons.email, color: Theme.of(context).colorScheme.primary),
-                    contentPadding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+                    contentPadding: EdgeInsetsGeometry.symmetric(
+                      horizontal: 20,
+                    ),
                     title: Text(
                       'Thông tin cá nhân',
                       style: Theme.of(context).textTheme.bodyLarge,
@@ -108,7 +122,9 @@ class SettingScreen extends StatelessWidget {
                   ),
                   ListTile(
                     // leading: Icon(Icons.email, color: Theme.of(context).colorScheme.primary),
-                    contentPadding: EdgeInsetsGeometry.symmetric(horizontal: 20),
+                    contentPadding: EdgeInsetsGeometry.symmetric(
+                      horizontal: 20,
+                    ),
                     title: Text(
                       'Đổi mật khẩu',
                       style: Theme.of(context).textTheme.bodyLarge,
