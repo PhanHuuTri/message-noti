@@ -4,6 +4,7 @@
 import 'package:demo_noti/data/models/user_model.dart';
 import 'package:demo_noti/utils/permission_utils.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_storage/get_storage.dart';
 
 abstract class AuthService with ChangeNotifier {
   bool get isLoggedIn;
@@ -14,14 +15,17 @@ abstract class AuthService with ChangeNotifier {
 
 class MockAuthService extends ChangeNotifier implements AuthService {
   User? _currentUser;
+  final _storage = GetStorage();
+  static const _userKey = 'currentUser';
 
   @override
   User? get currentUser => _currentUser;
   @override
   bool get isLoggedIn => _currentUser != null;
 
-  // --- DỮ LIỆU NGƯỜI DÙNG TẠM THỜI (MOCK DATA) ---
-  // Đây là nơi bạn định nghĩa các tài khoản để đăng nhập.
+
+  // --- TEMPORARY USER DATA (MOCK DATA) ---
+  // This is where you define the accounts for login.
   static final List<User> _users = [
     const User(
       id: 'npp01',
@@ -56,24 +60,42 @@ class MockAuthService extends ChangeNotifier implements AuthService {
       role: UserRole.nhanVien,
     ),
   ];
+  MockAuthService() {
+    _loadUserFromStorage();
+  }
+  void _loadUserFromStorage() {
+    try {
+      final userJson = _storage.read(_userKey);
+      if (userJson != null) {
+        _currentUser = User.fromJsonString(userJson);
+        notifyListeners();
+      }
+    } catch (e) {
+      _storage.remove(_userKey);
+      _currentUser = null;
+    }
+  }
 
-  /// Hàm giả lập đăng nhập.
+  /// Mock login function.
   @override
   Future<bool> login(String username, String password) async {
-    // Tìm người dùng trong danh sách dữ liệu tạm
+    // Find the user in the temporary data list
     final user = _users.firstWhere(
       (u) => u.username == username && u.password == password,
-      orElse: () => throw Exception('Tên đăng nhập hoặc mật khẩu không đúng'),
+      orElse: () => throw Exception('Incorrect username or password'),
     );
 
     await Future.delayed(
       const Duration(milliseconds: 500),
-    ); // Giả lập độ trễ mạng
+    ); // Simulate network latency
 
     _currentUser = user;
+
+    await _storage.write(_userKey, user.toJsonString());
     notifyListeners(); // Notify listening widgets of state change
     return true;
   }
+
 
   /// Mock logout function.
   @override
@@ -82,6 +104,9 @@ class MockAuthService extends ChangeNotifier implements AuthService {
       const Duration(milliseconds: 200),
     ); // Simulate network latency
     _currentUser = null;
+
+    await _storage.remove(_userKey);
+
     notifyListeners(); // Notify state change
   }
 }

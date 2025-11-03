@@ -22,16 +22,16 @@ void main() async {
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions
-        .currentPlatform, // nếu có file firebase_options.dart
-    // nếu KHÔNG có file này (mobile only) thì dùng: await Firebase.initializeApp();
+        .currentPlatform, // if there is a firebase_options.dart file
+    // if this file is NOT available (mobile only) then use: await Firebase.initializeApp();
   );
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await initializeLocalNotifications();
 
   final extra = <RouteBase>[
-    // Ví dụ: SettingsFeature.routes(), ProductFeature.routes(), ...
+    // Example: SettingsFeature.routes(), ProductFeature.routes(), ...
   ];
-  final authService = MockAuthService(); // Thay bằng AuthService thật
+  final authService = MockAuthService();
   final router = buildGoRouter(
     authService: authService, // Use the created instance
     extraRoutes: extra,
@@ -39,8 +39,8 @@ void main() async {
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
     redirect: (BuildContext context, GoRouterState state) {
-      // Ví dụ guard login cực gọn
-      // final loggedIn = true; // Lấy từ DI/state thực tế
+      // Example of a very simple login guard
+      // final loggedIn = true; // Get from actual DI/state
       final wantsProfile = state.matchedLocation.startsWith('/profile');
       if (wantsProfile) {
         return '/home';
@@ -67,20 +67,61 @@ Future<void> initServices() async {
   await Get.putAsync<StorageService>(() => StorageService().init());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.router, required this.nav});
-
+class MyApp extends StatefulWidget {
   final GoRouter router;
   final GoNav nav;
+
+  const MyApp({super.key, required this.router, required this.nav});
+
   @override
-  // This widget is the root of your application.
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late FirebaseMessaging _firebaseMessaging;
+
+  @override
+  void initState() {
+    super.initState();
+    // Any additional initialization if needed
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    // Any async initialization if needed
+    _firebaseMessaging = FirebaseMessaging.instance;
+
+    // Request permission for iOS
+    _firebaseMessaging.requestPermission();
+
+    // Get the token for this device
+    _firebaseMessaging.getToken().then((String? token) {
+      assert(token != null);
+      print("Firebase Messaging Token: $token");
+    });
+
+    // Handle foreground messages
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Received a message while in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('App opened from notification: ${message.notification?.title}');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final ThemeService themeService = Get.find<ThemeService>();
 
     return Obx(() {
       return MaterialApp.router(
-        routerConfig: router,
+        routerConfig: widget.router,
         debugShowCheckedModeBanner: false,
         themeMode: themeService.theme.value,
         theme: lightTheme,
@@ -89,85 +130,3 @@ class MyApp extends StatelessWidget {
     });
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-//   late FirebaseMessaging _firebaseMessaging;
-
-//   void _incrementCounter() {
-//     setState(() {
-//       _counter++;
-//     });
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _firebaseMessaging = FirebaseMessaging.instance;
-
-//     // Request permission for iOS
-//     _firebaseMessaging.requestPermission();
-
-//     // Get the token for this device
-//     _firebaseMessaging.getToken().then((String? token) {
-//       assert(token != null);
-//       print("Firebase Messaging Token: $token");
-//     });
-
-//     // Handle foreground messages
-//     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       print('Received a message while in the foreground!');
-//       print('Message data: ${message.data}');
-
-//       if (message.notification != null) {
-//         print('Message also contained a notification: ${message.notification}');
-//       }
-//     });
-
-//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-//       print('App opened from notification: ${message.notification?.title}');
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             const Text('You have pushed the button this many times:'),
-//             Switch(
-//               value: Provider.of<ThemeManager>(context).isDarkMode,
-//               onChanged: (value) {
-//                 Provider.of<ThemeManager>(context, listen: false).toggleTheme();
-//               },
-//             ),
-//             Text(
-//               '$_counter',
-//               style: Theme.of(context).textTheme.headlineMedium,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: const Icon(Icons.add),
-//       ), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }

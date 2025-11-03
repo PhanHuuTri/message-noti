@@ -9,7 +9,7 @@ class ForgotPasswordScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quên mật khẩu'),
+        title: const Text('Forgot Password'),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -21,7 +21,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               Text(
-                'Đặt lại mật khẩu',
+                'Reset Password',
                 style: textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -29,14 +29,14 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Vui lòng nhập email hoặc số điện thoại đã đăng ký. Chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu.',
+                'Please enter your registered email or phone number. We will send you a link to reset your password.',
                 style: textTheme.titleMedium?.copyWith(color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
               const TextField(
                 decoration: InputDecoration(
-                  labelText: 'Email hoặc Số điện thoại',
+                  labelText: 'Email or Phone Number',
                   prefixIcon: Icon(Icons.alternate_email),
                   border: OutlineInputBorder(),
                 ),
@@ -51,9 +51,9 @@ class ForgotPasswordScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // TODO: Xử lý logic gửi yêu cầu
+                  // TODO: Handle request submission logic
                 },
-                child: const Text('Gửi yêu cầu'),
+                child: const Text('Send Request'),
               ),
             ],
           ),
