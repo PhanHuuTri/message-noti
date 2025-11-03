@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 32),
                     TextField(
                       decoration: InputDecoration(
-                        labelText: 'Tên đăng nhập hoặc email',
+                        labelText: 'Username or email',
                         prefixIcon: Icon(Icons.person_outline),
                         fillColor: Theme.of(context).colorScheme.primary,
                         prefixIconColor: Theme.of(context).colorScheme.primary,
@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextField(
                       obscureText: !_isPasswordVisible,
                       decoration: InputDecoration(
-                        labelText: 'Mật khẩu',
+                        labelText: 'Password',
                         alignLabelWithHint: true,
                         prefixIcon: const Icon(Icons.lock_outline),
                         fillColor: Theme.of(context).colorScheme.primary,
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           // Use GoRouter to navigate
                           GoRouter.of(context).push('/forgot-password');
                         },
-                        child: const Text('Quên mật khẩu?'),
+                        child: const Text('Forgot password?'),
                       ),
                     ),
                     const SizedBox(height: 24),

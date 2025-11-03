@@ -82,5 +82,5 @@ void _onForegroundMessage(RemoteMessage message) async {
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  // Xử lý logic nhẹ (ghi log, prefetch…), đừng hiển thị local noti.
+  // Handle light logic (logging, prefetching...), do not show local noti.
 }

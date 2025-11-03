@@ -57,7 +57,7 @@ String? _appRedirect(
   final isLoggedIn = authService.isLoggedIn;
   final location = state.matchedLocation;
 
-  // Các trang không cần đăng nhập
+  // Pages that do not require login
   final isPublicPage = location == '/login' || location == '/forgot-password';
 
   // If on Splash screen, allow display
@@ -65,12 +65,12 @@ String? _appRedirect(
     return null;
   }
 
-  // Nếu chưa đăng nhập và đang cố vào trang cần bảo vệ
+  // If not logged in and trying to access a protected page
   if (!isLoggedIn && !isPublicPage) {
     return '/login';
   }
 
-  // Nếu đã đăng nhập và đang vào trang login/forgot password
+  // If logged in and accessing the login/forgot password page
   if (isLoggedIn && isPublicPage) {
     return '/home';
   }
