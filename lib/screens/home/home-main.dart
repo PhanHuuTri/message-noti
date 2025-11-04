@@ -41,9 +41,9 @@ class HomeMainScreen extends StatelessWidget {
       case UserRole.nhanVien:
         // Navigate to C2 dashboard
         return Scaffold(
-          appBar: AppBar(title: const Text('Nhân viên Dashboard')),
+          appBar: AppBar(title: const Text('Employee Dashboard')),
           body: const Center(
-            child: Text('Welcome to the Nhân viên Dashboard!'),
+            child: Text('Welcome to the Employee Dashboard!'),
           ),
         );
     }

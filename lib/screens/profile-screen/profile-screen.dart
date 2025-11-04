@@ -1,3 +1,4 @@
+import 'package:demo_noti/data/models/user_model.dart';
 import 'package:demo_noti/data/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final authenService = context.watch<AuthService>();
+    final User? user = authenService.currentUser;
     return Material(
       child: SafeArea(
         child: Center(
@@ -46,14 +49,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   SizedBox(height: 16),
-                  Text(
-                    'Robert Albert', // User's name
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'robertalbert123@gmail.com', // User's email
-                    style: TextStyle(fontSize: 15, color: Colors.grey),
-                  ),
+                  user != null
+                      ? Text(
+                          user.name,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : SizedBox(),
+                  user != null
+                      ? Text(
+                          user.email,
+                          style: TextStyle(fontSize: 15, color: Colors.grey),
+                        )
+                      : SizedBox(),
                   SizedBox(height: 24),
                   Container(
                     padding: EdgeInsets.all(16),
@@ -112,7 +122,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           title: 'Log out',
                           onTap: () {
                             // Navigate to help & support
-                            Provider.of<AuthService>(context, listen: false).logout();
+                            Provider.of<AuthService>(
+                              context,
+                              listen: false,
+                            ).logout();
                           },
                         ),
                       ],

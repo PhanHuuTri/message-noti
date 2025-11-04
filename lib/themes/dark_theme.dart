@@ -15,21 +15,20 @@ final ThemeData darkTheme = ThemeData(
   buttonTheme: ButtonThemeData(
     buttonColor: Colors.deepPurple[100],
     textTheme: ButtonTextTheme.primary,
-    
   ),
   navigationBarTheme: NavigationBarThemeData(
     backgroundColor: Colors.deepPurple[800],
     indicatorColor: Colors.deepPurple[800],
     labelTextStyle: WidgetStateProperty.all(
-      const TextStyle(
-        color: Colors.white,
-      ),
+      const TextStyle(color: Colors.white),
     ),
-    iconTheme: WidgetStateProperty.all(
-      const IconThemeData(
-        color: Colors.white,
-      ),
-    ),
+    iconTheme: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return IconThemeData(color: Colors.white);
+      }
+
+      return const IconThemeData(color: Colors.black54);
+    }),
   ),
   colorScheme: ColorScheme.dark(
     primary: Colors.deepPurple,

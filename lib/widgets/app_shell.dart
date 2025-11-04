@@ -25,16 +25,18 @@ final class AppShell extends StatelessWidget {
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.swap_horiz,
+              Icons.swap_horiz_outlined,
               color: Theme.of(context).colorScheme.primary,
             ),
+            selectedIcon: Icon(Icons.swap_horiz),
             label: 'Transactions',
           ),
           NavigationDestination(
             icon: Icon(
-              Icons.inventory_2,
+              Icons.inventory_2_outlined,
               color: Theme.of(context).colorScheme.primary,
             ),
+            selectedIcon: Icon(Icons.inventory_2),
             label: 'Products',
           ),
           NavigationDestination(
@@ -42,10 +44,7 @@ final class AppShell extends StatelessWidget {
               Icons.notifications_outlined,
               color: Theme.of(context).colorScheme.primary,
             ),
-            selectedIcon: Icon(
-              Icons.notifications,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+            selectedIcon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
           NavigationDestination(
@@ -53,10 +52,7 @@ final class AppShell extends StatelessWidget {
               Icons.person_outline,
               color: Theme.of(context).colorScheme.primary,
             ),
-            selectedIcon: Icon(
-              Icons.person,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+            selectedIcon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],

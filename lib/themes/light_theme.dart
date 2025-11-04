@@ -16,10 +16,22 @@ final ThemeData lightTheme = ThemeData(
     backgroundColor: Colors.deepPurple[400],
     foregroundColor: Colors.white,
     shadowColor: Colors.black,
+    actionsIconTheme: IconThemeData(color: Colors.white),
+    iconTheme: IconThemeData(color: Colors.white),
   ),
   buttonTheme: ButtonThemeData(
     buttonColor: Colors.deepPurple[400],
     textTheme: ButtonTextTheme.primary,
+  ),
+  navigationBarTheme: NavigationBarThemeData(
+    backgroundColor: Colors.white,
+    indicatorColor: Colors.deepPurple.shade400,
+    iconTheme: WidgetStateProperty.resolveWith((states) {
+      if (states.contains(WidgetState.selected)) {
+        return IconThemeData(color: const Color.fromARGB(255, 255, 255, 255));
+      }
+      return const IconThemeData(color: Colors.black54);
+    }),
   ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.black, fontSize: 18),
